@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dhanalakshmi Srinivasan University</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Montserrat:wght@600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--navy:#0d1f3c;--blue:#1a4080;--gold:#e8a020;--amber:#f5c842;--cream:#fdf8ef;--white:#ffffff;--light:#eef3fb;--muted:#5a6a82;--text:#1e2d45;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Open Sans',sans-serif;background:var(--cream);color:var(--text);}
+
+    /* ── HEADER ── */
+    header{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 60%,#2563b0 100%);color:var(--white);padding:70px 40px 60px;text-align:center;position:relative;overflow:hidden;}
+    header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(232,160,32,.18) 0%,transparent 65%);}
+    header .badge{display:inline-block;background:var(--gold);color:var(--navy);font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:20px;animation:fadeDown .7s ease both;}
+    header h1{font-family:'Poppins',sans-serif;font-size:clamp(1.9rem,5vw,3.2rem);font-weight:900;line-height:1.15;letter-spacing:-.01em;position:relative;animation:fadeDown .8s .1s ease both;}
+    header h1 span{color:var(--amber);}
+    header .motto{margin-top:14px;font-family:'Open Sans',sans-serif;font-size:1rem;opacity:.85;font-style:italic;animation:fadeDown .9s .2s ease both;}
+
+    /* ── LAYOUT ── */
+    main{max-width:900px;margin:0 auto;padding:50px 24px 80px;display:flex;flex-direction:column;gap:70px;}
+
+    /* ── CARD ENTRANCE ANIMATION ── */
+    .card{background:var(--white);border-radius:16px;box-shadow:0 4px 24px rgba(13,31,60,.08);overflow:hidden;
+      opacity:0;transform:translateY(32px);transition:opacity .55s ease,transform .55s ease,box-shadow .3s ease;}
+    .card.visible{opacity:1;transform:translateY(0);}
+    .card:hover{box-shadow:0 10px 36px rgba(13,31,60,.13);}
+
+    .card-header{background:linear-gradient(90deg,var(--blue) 0%,#2563b0 100%);padding:18px 30px;display:flex;align-items:center;gap:12px;}
+    .card-header .icon{width:34px;height:34px;background:rgba(255,255,255,.18);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+    .card-header h2{font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:700;color:var(--white);letter-spacing:.04em;text-transform:uppercase;}
+    .card-body{padding:28px 30px;}
+    .card-body>p{font-family:'Open Sans',sans-serif;font-size:.97rem;line-height:1.8;color:var(--text);}
+
+    /* ── ABOUT ── */
+    .about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:20px;}
+    .about-chip{background:var(--light);border-left:4px solid var(--gold);border-radius:8px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:.88rem;color:var(--text);font-weight:500;
+      opacity:0;transform:translateX(-14px);transition:opacity .4s ease,transform .4s ease;}
+    .card.visible .about-chip:nth-child(1){opacity:1;transform:none;transition-delay:.1s;}
+    .card.visible .about-chip:nth-child(2){opacity:1;transform:none;transition-delay:.2s;}
+    .card.visible .about-chip:nth-child(3){opacity:1;transform:none;transition-delay:.3s;}
+    .card.visible .about-chip:nth-child(4){opacity:1;transform:none;transition-delay:.4s;}
+
+    /* ── NUM LIST ── */
+    .num-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:4px;}
+    .num-list li{display:flex;align-items:flex-start;gap:14px;font-family:'Open Sans',sans-serif;font-size:.97rem;line-height:1.6;color:var(--text);
+      opacity:0;transform:translateX(-10px);transition:opacity .35s ease,transform .35s ease;}
+    .card.visible .num-list li:nth-child(1){opacity:1;transform:none;transition-delay:.05s;}
+    .card.visible .num-list li:nth-child(2){opacity:1;transform:none;transition-delay:.1s;}
+    .card.visible .num-list li:nth-child(3){opacity:1;transform:none;transition-delay:.15s;}
+    .card.visible .num-list li:nth-child(4){opacity:1;transform:none;transition-delay:.2s;}
+    .card.visible .num-list li:nth-child(5){opacity:1;transform:none;transition-delay:.25s;}
+    .card.visible .num-list li:nth-child(6){opacity:1;transform:none;transition-delay:.3s;}
+    .card.visible .num-list li:nth-child(7){opacity:1;transform:none;transition-delay:.35s;}
+    .card.visible .num-list li:nth-child(8){opacity:1;transform:none;transition-delay:.4s;}
+    .num-list li .num{min-width:30px;height:30px;background:var(--blue);color:var(--white);border-radius:50%;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0;}
+
+    /* ── DEPARTMENTS ── */
+    .dept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:4px;}
+    .dept-item{background:var(--light);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;
+      transition:transform .22s ease,box-shadow .22s ease,background .22s ease;cursor:default;
+      opacity:0;transform:scale(.96);transition:opacity .35s ease,transform .35s ease,box-shadow .22s ease,background .22s ease;}
+    .card.visible .dept-item{opacity:1;transform:scale(1);}
+    .card.visible .dept-item:nth-child(1){transition-delay:.05s;}
+    .card.visible .dept-item:nth-child(2){transition-delay:.1s;}
+    .card.visible .dept-item:nth-child(3){transition-delay:.15s;}
+    .card.visible .dept-item:nth-child(4){transition-delay:.2s;}
+    .card.visible .dept-item:nth-child(5){transition-delay:.25s;}
+    .card.visible .dept-item:nth-child(6){transition-delay:.3s;}
+    .card.visible .dept-item:nth-child(7){transition-delay:.35s;}
+    .dept-item:hover{transform:translateY(-4px) scale(1)!important;box-shadow:0 8px 24px rgba(26,64,128,.15);background:#ddeaff;}
+    .dept-item .d-num{background:var(--gold);color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;min-width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .dept-item span{font-family:'Open Sans',sans-serif;font-size:.9rem;font-weight:500;color:var(--text);}
+
+    /* ── LINK BUTTON ── */
+    .link-btn{display:inline-flex;align-items:center;gap:7px;margin-top:18px;background:var(--gold);color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:8px;text-decoration:none;transition:background .2s,transform .15s,box-shadow .2s;}
+    .link-btn:hover{background:var(--amber);transform:translateY(-2px);box-shadow:0 6px 18px rgba(232,160,32,.35);}
+    .link-btn svg{width:15px;height:15px;}
+
+    /* ── CONTACT ── */
+    .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;}
+    .contact-item{background:var(--light);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+      transition:transform .2s ease,box-shadow .2s ease;}
+    .contact-item:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(13,31,60,.1);}
+    .contact-item .ci-icon{width:40px;height:40px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+    .contact-item .ci-icon svg{width:20px;height:20px;fill:var(--white);}
+    .contact-item .ci-label{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+    .contact-item .ci-value{font-family:'Open Sans',sans-serif;font-size:.92rem;font-weight:500;color:var(--text);word-break:break-word;}
+    .contact-item a.ci-value{color:var(--blue);text-decoration:none;}
+    .contact-item a.ci-value:hover{text-decoration:underline;}
+    .website-banner{margin-top:24px;background:linear-gradient(90deg,var(--navy) 0%,var(--blue) 100%);border-radius:12px;padding:20px 26px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+    .website-banner p{font-family:'Open Sans',sans-serif;color:rgba(255,255,255,.8);font-size:.9rem;}
+    .website-banner strong{color:var(--white);font-family:'Montserrat',sans-serif;}
+    .website-banner a{background:var(--gold);color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.85rem;padding:9px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:background .2s,transform .15s;}
+    .website-banner a:hover{background:var(--amber);transform:translateY(-1px);}
+
+    /* ── CHATBOT ── */
+    #chat-window{background:var(--light);border-radius:12px;padding:20px;min-height:240px;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;margin-bottom:14px;scroll-behavior:smooth;}
+    .chat-msg{display:flex;gap:10px;align-items:flex-start;animation:msgPop .3s ease both;}
+    @keyframes msgPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .chat-msg.user{flex-direction:row-reverse;}
+    .chat-msg .avatar{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+    .chat-msg.user .avatar{background:var(--gold);color:var(--navy);}
+    .chat-msg .bubble{background:var(--white);border-radius:12px 12px 12px 2px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:.91rem;line-height:1.75;color:var(--text);max-width:80%;box-shadow:0 2px 8px rgba(13,31,60,.07);}
+    .chat-msg.user .bubble{background:var(--blue);color:var(--white);border-radius:12px 12px 2px 12px;}
+    .chat-msg .bubble a{color:var(--blue);}
+    .chat-msg.user .bubble a{color:var(--amber);}
+    .typing-dots span{display:inline-block;width:7px;height:7px;background:var(--muted);border-radius:50%;margin:0 2px;animation:bounce 1.2s infinite;}
+    .typing-dots span:nth-child(2){animation-delay:.2s;}
+    .typing-dots span:nth-child(3){animation-delay:.4s;}
+    @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}}
+    #suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+    .suggestion-btn{background:var(--white);border:1.5px solid #c5d5ef;border-radius:20px;padding:6px 14px;font-family:'Open Sans',sans-serif;font-size:.82rem;color:var(--blue);cursor:pointer;transition:background .18s,border-color .18s,transform .15s,box-shadow .18s;}
+    .suggestion-btn:hover{background:var(--light);border-color:var(--blue);transform:translateY(-2px);box-shadow:0 4px 12px rgba(26,64,128,.12);}
+    #chat-input-row{display:flex;gap:10px;}
+    #chat-input{flex:1;padding:12px 18px;border:2px solid #c5d5ef;border-radius:10px;font-family:'Open Sans',sans-serif;font-size:.95rem;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;}
+    #chat-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,64,128,.1);}
+    #ask-btn{background:var(--blue);color:var(--white);border:none;border-radius:10px;padding:12px 22px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap;}
+    #ask-btn:hover{background:#2563b0;transform:translateY(-1px);box-shadow:0 6px 16px rgba(26,64,128,.3);}
+    #ask-btn:disabled{background:var(--muted);cursor:not-allowed;transform:none;box-shadow:none;}
+
+    /* ── FOOTER ── */
+    footer{background:var(--navy);color:rgba(255,255,255,.55);text-align:center;padding:22px;font-family:'Open Sans',sans-serif;font-size:.82rem;}
+    footer strong{color:var(--amber);}
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Tamil Nadu Private Universities Act, 2019</div>
+  <h1>Dhanalakshmi Srinivasan<br><span>University</span></h1>
+  <p class="motto">"Education for the Real World"</p>
+</header>
+
+<main>
+
+  <!-- ABOUT US -->
+  <div class="card">
+    <div class="card-header"><div class="icon">&#127891;</div><h2>About Us</h2></div>
+    <div class="card-body">
+      <p>Dhanalakshmi Srinivasan University (DSU) is established under the Tamil Nadu Private Universities Act, 2019, located in Perambalur, Tamil Nadu, India. DSU offers multidisciplinary academic programs including medicine and engineering, guided by its motto <strong>"Education for the Real World"</strong>.</p>
+      <div class="about-grid">
+        <div class="about-chip">&#128205; Perambalur, Tamil Nadu</div>
+        <div class="about-chip">&#127963; Est. under TN Act, 2019</div>
+        <div class="about-chip">&#127807; Green &amp; Modern Campus</div>
+        <div class="about-chip">&#127758; National &amp; International Students</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEPARTMENTS -->
+  <div class="card">
+    <div class="card-header"><div class="icon">&#127979;</div><h2>Departments</h2></div>
+    <div class="card-body">
+      <div class="dept-grid">
+        <div class="dept-item"><div class="d-num">1</div><span>Institute of Medical Sciences and Hospital</span></div>
+        <div class="dept-item"><div class="d-num">2</div><span>School of Engineering &amp; Technology</span></div>
+        <div class="dept-item"><div class="d-num">3</div><span>School of Allied Health Sciences</span></div>
+        <div class="dept-item"><div class="d-num">4</div><span>School of Agricultural Sciences</span></div>
+        <div class="dept-item"><div class="d-num">5</div><span>School of Physiotherapy</span></div>
+        <div class="dept-item"><div class="d-num">6</div><span>Institute of Pharmacy</span></div>
+        <div class="dept-item"><div class="d-num">7</div><span>School of Law</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMISSION PROCEDURE -->
+  <div class="card">
+    <div class="card-header"><div class="icon">&#128203;</div><h2>Admission Procedure</h2></div>
+    <div class="card-body">
+      <ul class="num-list">
+        <li><div class="num">1</div><div>Make an application</div></li>
+        <li><div class="num">2</div><div>Choose a programme / course</div></li>
+        <li><div class="num">3</div><div>Check eligibility and requirements</div></li>
+        <li><div class="num">4</div><div>Take online entrance exam <strong>DSU-JET</strong> (Engineering only)</div></li>
+        <li><div class="num">5</div><div>Attend counselling / interview (for some courses)</div></li>
+        <li><div class="num">6</div><div>Receive confirmation or rejection</div></li>
+        <li><div class="num">7</div><div>Pay fees if selected</div></li>
+        <li><div class="num">8</div><div>Start the programme &#127881;</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ELIGIBILITY — updated link -->
+  <div class="card">
+    <div class="card-header"><div class="icon">&#9989;</div><h2>Eligibility Criteria</h2></div>
+    <div class="card-body">
+      <p>Eligibility requirements vary by programme and course. Please visit the official DSU admissions page for full and up-to-date eligibility details for each department.</p>
+      <a class="link-btn" href="https://www.dsuniversity.ac.in/ad-eligibility-criteria" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Eligibility Criteria
+      </a>
+    </div>
+  </div>
+
+  <!-- FEES — updated link -->
+  <div class="card">
+    <div class="card-header"><div class="icon">&#128176;</div><h2>Fees Structure</h2></div>
+    <div class="card-body">
+      <p>Detailed fee structures for all programmes are available on the DSU admissions portal. Fees may vary depending on the course, department, and category of admission.</p>
+      <a class="link-btn" href="https://www.dsuniversity.ac.in/ad-fee-structure.php" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View Fees Structure
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card">
+    <div class="card-header"><div class="icon">&#128222;</div><h2>Contact Us</h2></div>
+    <div class="card-body">
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+          <span class="ci-label">Address</span><span class="ci-value">Perambalur &#8211; 621212</span>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg></div>
+          <span class="ci-label">State</span><span class="ci-value">Tamil Nadu, India</span>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+          <span class="ci-label">Admission Phone</span><a class="ci-value" href="tel:18008896622">1800 889 6622</a>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+          <span class="ci-label">Email</span><a class="ci-value" href="mailto:admissioncell@dsuniversity.edu.in">admissioncell@dsuniversity.edu.in</a>
+        </div>
+      </div>
+      <div class="website-banner">
+        <p><strong>Official Website</strong><br>www.dsuniversity.ac.in</p>
+        <a href="https://www.dsuniversity.ac.in/" target="_blank">Visit Website &#8594;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI CHATBOT -->
+  <div class="card" id="chatbot-section">
+    <div class="card-header"><div class="icon">&#129302;</div><h2>Ask DSU Admission Assistant</h2></div>
+    <div class="card-body">
+      <p style="margin-bottom:18px;color:var(--muted);font-size:.91rem;">Have a question about DSU? Ask below &#8212; our assistant knows all about admissions, departments, and more!</p>
+      <div id="chat-window">
+        <div class="chat-msg bot">
+          <div class="avatar">&#127891;</div>
+          <div class="bubble">Hello! I'm the DSU Admission Assistant &#128075;<br>Ask me anything about Dhanalakshmi Srinivasan University &#8212; departments, admission steps, eligibility, contact details and more!</div>
+        </div>
+      </div>
+      <div id="suggestions">
+        <button class="suggestion-btn" onclick="askSuggestion(this)">What departments does DSU offer?</button>
+        <button class="suggestion-btn" onclick="askSuggestion(this)">How do I apply for admission?</button>
+        <button class="suggestion-btn" onclick="askSuggestion(this)">What is DSU-JET?</button>
+        <button class="suggestion-btn" onclick="askSuggestion(this)">Where is DSU located?</button>
+        <button class="suggestion-btn" onclick="askSuggestion(this)">How can I contact DSU?</button>
+        <button class="suggestion-btn" onclick="askSuggestion(this)">What is DSU's motto?</button>
+      </div>
+      <div id="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Ask your question here..." onkeydown="if(event.key==='Enter') sendMessage()"/>
+        <button id="ask-btn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="17" height="17"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Ask
+        </button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2025 <strong>Dhanalakshmi Srinivasan University</strong> &middot; Perambalur, Tamil Nadu, India
+</footer>
+
+<script>
+// ================================================================
+//  DSU Q&A — Keyword-based trained chatbot (from txt file + extras)
+// ================================================================
+const QA = [
+
+  // GREETINGS
+  {k:["hi","hello","hey","good morning","good afternoon","good evening","hlo","hai","greetings","howdy"],
+   a:"Hello! &#128075; Welcome to the DSU Admission Assistant.<br>I can help you with departments, admission steps, eligibility, fees, and contact details. What would you like to know?"},
+  {k:["thank","thanks","thank you","tq","ty","great","helpful","nice","well done","perfect","awesome"],
+   a:"You're welcome! &#128522; Feel free to ask if you have more questions about DSU. Happy to help!"},
+  {k:["bye","goodbye","see you","exit","take care","cya","farewell"],
+   a:"Goodbye! &#128075; Best of luck with your DSU admission journey. Feel free to return anytime!"},
+
+  // UNIVERSITY NAME  (keyword from txt)
+  {k:["university name","name of university","what is the name","dsu full form","full form","dhanalakshmi"],
+   a:"The university name is <strong>Dhanalakshmi Srinivasan University (DSU)</strong>."},
+
+  // LOCATION  (keyword from txt)
+  {k:["location","where is","address","place","city","district","perambalur","621212","situated","state","tamilnadu","tamil nadu","india"],
+   a:"DSU is located in <strong>Perambalur, Tamil Nadu, India</strong>.&#128205;"},
+
+  // ESTABLISHED  (keyword from txt)
+  {k:["established","founded","when was","year","act","2019","history","origin","started","inception"],
+   a:"DSU was established under the <strong>Tamil Nadu Private Universities Act, 2019</strong>."},
+
+  // MOTTO  (keyword from txt)
+  {k:["motto","mission","vision","tagline","slogan","goal","objective"],
+   a:"The motto of the university is <strong>\"Education for the Real World.\"</strong>"},
+
+  // FACILITIES  (keyword from txt)
+  {k:["facilities","facility","campus","infrastructure","green","modern","lab","library","hostel","sports","amenities","what does dsu provide","campus provide"],
+   a:"The DSU campus provides:<br>1. Green ambience<br>2. Modern infrastructure<br>3. Experienced faculty<br>4. Facilities for national and international students"},
+
+  // DEPARTMENTS  (keyword from txt)
+  {k:["departments","department","school","schools","institute","courses","programmes","programs","all courses","list","how many"],
+   a:"The university has the following departments:<br>1. Institute of Medical Sciences and Hospital<br>2. School of Engineering &amp; Technology<br>3. School of Allied Health Sciences<br>4. School of Agricultural Sciences<br>5. School of Physiotherapy<br>6. Institute of Pharmacy<br>7. School of Law"},
+
+  // INDIVIDUAL DEPARTMENTS
+  {k:["medical","medicine","mbbs","doctor","hospital","clinical","md","ms"],
+   a:"DSU has the <strong>Institute of Medical Sciences and Hospital</strong>, offering medical programmes with clinical training through its hospital."},
+  {k:["engineering","technology","btech","b.tech","cse","ece","eee","mechanical","civil","computer science","it"],
+   a:"The <strong>School of Engineering &amp; Technology</strong> offers various B.Tech programmes. Admissions require the <strong>DSU-JET</strong> entrance exam."},
+  {k:["allied health","allied","paramedical","health science","diagnostic","radiology","optometry"],
+   a:"The <strong>School of Allied Health Sciences</strong> covers a range of paramedical and health-related academic programmes."},
+  {k:["agriculture","agricultural","farming","agri","horticulture","crop"],
+   a:"The <strong>School of Agricultural Sciences</strong> offers programmes in agriculture, crop science, and related fields."},
+  {k:["physiotherapy","physio","physical therapy","rehabilitation","bpt"],
+   a:"The <strong>School of Physiotherapy</strong> offers B.P.T. and physiotherapy programmes for students interested in physical therapy."},
+  {k:["pharmacy","pharma","drug","bpharm","b.pharm","mpharm","pharmaceutical"],
+   a:"The <strong>Institute of Pharmacy</strong> offers B.Pharm, M.Pharm, and other pharmacy programmes."},
+  {k:["law","llb","legal","advocate","lawyer","ba llb","legal studies"],
+   a:"The <strong>School of Law</strong> offers LLB, BA LLB, and integrated law degree programmes."},
+
+  // ADMISSION  (keyword from txt)
+  {k:["admission","how to apply","apply","application","admission process","admission procedure","steps","how do i join","process"],
+   a:"Admission steps:<br>1. Apply<br>2. Choose programme<br>3. Check eligibility<br>4. Entrance exam (for engineering)<br>5. Counselling / interview<br>6. Confirmation<br>7. Pay fees<br>8. Start programme &#127881;"},
+
+  // ENTRANCE EXAM  (keyword from txt)
+  {k:["dsu-jet","dsu jet","jet exam","jet test","entrance exam","entrance test","engineering exam","entrance","test for engineering"],
+   a:"Engineering admission requires the <strong>DSU-JET</strong> (DSU Joint Entrance Test) — an <strong>online entrance exam</strong>."},
+
+  // ELIGIBILITY  (keyword from txt — updated link)
+  {k:["eligibility","eligible","qualification","criteria","requirement","12th","plus two","10+2","degree","minimum marks","percentage"],
+   a:"Students can visit the official website for eligibility details:<br>&#128279; <a href='https://www.dsuniversity.ac.in/ad-eligibility-criteria' target='_blank'>dsuniversity.ac.in/ad-eligibility-criteria</a>"},
+
+  // FEES  (keyword from txt — updated link)
+  {k:["fees","fee","cost","tuition","amount","structure","pay","payment","how much","charge","expenses"],
+   a:"Fee details are available at:<br>&#128279; <a href='https://www.dsuniversity.ac.in/ad-fee-structure.php' target='_blank'>dsuniversity.ac.in/ad-fee-structure.php</a>"},
+
+  // EMAIL  (keyword from txt)
+  {k:["admission email","email address","mail","e-mail","write to","send email","what is email"],
+   a:"The admission email is <strong>admissioncell@dsuniversity.edu.in</strong>. &#128231;"},
+
+  // OFFICIAL WEBSITE  (keyword from txt)
+  {k:["official website","website","site","web","url","link","online portal"],
+   a:"The official website of the university is:<br>&#127760; <a href='https://www.dsuniversity.ac.in/' target='_blank'>https://www.dsuniversity.ac.in/</a>"},
+
+  // CONTACT  (keyword from txt)
+  {k:["contact","phone","number","call","helpline","toll free","reach","helpdesk","telephone","how to reach"],
+   a:"Contact this number: <strong>1800 889 6622</strong> &#128222;<br>Or visit: <a href='https://www.dsuniversity.edu.in/dsu-contact.php' target='_blank'>dsuniversity.edu.in/dsu-contact.php</a>"},
+
+  // INTERNATIONAL
+  {k:["international","foreign","abroad","overseas","global","nri","other country"],
+   a:"Yes! DSU welcomes both <strong>national and international students</strong> with modern campus facilities for all."},
+
+  // EXTRA HELPFUL
+  {k:["scholarship","financial aid","discount","concession","fee waiver"],
+   a:"For scholarship details, please contact the admission office:<br>&#128222; <strong>1800 889 6622</strong><br>&#128231; <strong>admissioncell@dsuniversity.edu.in</strong>"},
+  {k:["documents","required documents","certificates","marksheet","transfer certificate","tc"],
+   a:"Required documents typically include mark sheets, transfer certificate, ID proof, and passport-size photos. Contact the office for the full list:<br>&#128222; <strong>1800 889 6622</strong>"},
+  {k:["counselling","counseling","interview","selection process","merit list"],
+   a:"After application review, shortlisted candidates attend <strong>counselling or interview</strong> (Step 5 in the admission process)."},
+  {k:["private","government","govt","autonomous","type of university"],
+   a:"DSU is a <strong>private university</strong>, established under the Tamil Nadu Private Universities Act, 2019."},
+  {k:["about dsu","what is dsu","overview","introduction","describe dsu"],
+   a:"<strong>Dhanalakshmi Srinivasan University (DSU)</strong> is a private university in Perambalur, Tamil Nadu, India, established under the Tamil Nadu Private Universities Act, 2019. It offers multidisciplinary programmes in medicine, engineering, law, pharmacy, agriculture, and more — guided by the motto <em>\"Education for the Real World.\"</em>"},
+];
+
+// ================================================================
+//  KEYWORD MATCH ENGINE
+// ================================================================
+function findAnswer(input) {
+  const q = input.toLowerCase().replace(/[?!.,]/g,'').trim();
+  let bestScore = 0, bestAnswer = null;
+  for (const qa of QA) {
+    let score = 0;
+    for (const kw of qa.k) {
+      if (q.includes(kw)) score += kw.split(' ').length * 3;
+      for (const word of kw.split(' '))
+        if (word.length > 3 && q.includes(word)) score += 1;
+    }
+    if (score > bestScore) { bestScore = score; bestAnswer = qa.a; }
+  }
+  return bestScore >= 2 ? bestAnswer : null;
+}
+
+// ================================================================
+//  CHAT UI
+// ================================================================
+function scrollChat(){ const w=document.getElementById('chat-window'); w.scrollTop=w.scrollHeight; }
+
+function addMessage(role, html) {
+  const win=document.getElementById('chat-window');
+  const div=document.createElement('div');
+  div.className='chat-msg '+(role==='user'?'user':'bot');
+  div.innerHTML='<div class="avatar">'+(role==='user'?'&#129489;':'&#127891;')+'</div><div class="bubble">'+html+'</div>';
+  win.appendChild(div); scrollChat();
+}
+
+function addTyping(){
+  const win=document.getElementById('chat-window');
+  const div=document.createElement('div');
+  div.className='chat-msg bot'; div.id='typing-indicator';
+  div.innerHTML='<div class="avatar">&#127891;</div><div class="bubble typing-dots"><span></span><span></span><span></span></div>';
+  win.appendChild(div); scrollChat();
+}
+function removeTyping(){ const el=document.getElementById('typing-indicator'); if(el) el.remove(); }
+
+function sendMessage(){
+  const input=document.getElementById('chat-input');
+  const btn=document.getElementById('ask-btn');
+  const text=input.value.trim();
+  if(!text) return;
+  document.getElementById('suggestions').style.display='none';
+  addMessage('user', text);
+  input.value=''; btn.disabled=true;
+  addTyping();
+  setTimeout(()=>{
+    removeTyping();
+    const answer=findAnswer(text);
+    if(answer){
+      addMessage('bot', answer);
+    } else {
+      addMessage('bot',
+        "Sorry, I don't have further details on that. &#128591;<br><br>"+
+        "Please contact the admission office directly:<br>"+
+        "&#128222; <strong>1800 889 6622</strong><br>"+
+        "&#128231; <strong>admissioncell@dsuniversity.edu.in</strong>"
+      );
+    }
+    btn.disabled=false;
+    input.focus();
+  }, 700);
+}
+
+function askSuggestion(btn){ document.getElementById('chat-input').value=btn.textContent; sendMessage(); }
+
+// ================================================================
+//  SCROLL ANIMATION — cards fade in when visible
+// ================================================================
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.12});
+document.querySelectorAll('.card').forEach(c=>observer.observe(c));
+</script>
+</body>
+</html>
